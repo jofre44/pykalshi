@@ -96,7 +96,7 @@ def test_post_error_includes_request_body(client, mock_response):
         {"message": "Rejected", "code": "order_rejected"}, status_code=400
     )
     with pytest.raises(OrderRejectedError) as exc_info:
-        client.post("/portfolio/orders", order_data)
+        client.post("/portfolio/events/orders", order_data)
 
     err = exc_info.value
     assert err.method == "POST"
@@ -120,7 +120,7 @@ def test_order_rejected_error_codes(client, mock_response):
             {"message": f"Error: {code}", "code": code}, status_code=400
         )
         with pytest.raises(OrderRejectedError) as exc_info:
-            client.post("/portfolio/orders", {})
+            client.post("/portfolio/events/orders", {})
         assert exc_info.value.error_code == code
 
 
